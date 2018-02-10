@@ -2,8 +2,9 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(App\Comment::class, function (Faker $faker) {
     return [
-        //
+        'body' => $faker->sentence(),
+        'user_id' => Auth::id(),
     ];
 });
