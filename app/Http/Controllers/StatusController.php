@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Status;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
+        $data['statuses'] = Status::getAllWithAuth();
+        return view('statuses.index', $data);
     }
 
     /**
@@ -35,7 +37,10 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $status = new Status();
+        $status->body = $request->get('body');
+        Auth::user()->statuses()->save($status);
+        return Redirect()->back();
     }
 
     /**
@@ -69,7 +74,10 @@ class StatusController extends Controller
      */
     public function update(Request $request, Status $status)
     {
-        //
+        $status = Status::findOrFail($id);
+        $status->body = $request->get('body');
+        Auth::user()->statuses()->save($status);
+        return Redirect()->back();
     }
 
     /**

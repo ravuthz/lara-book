@@ -1,14 +1,98 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
-// Variables
-@import "variables";
-
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+@import "modules/nav";
+@import "modules/user";
+@import "modules/status";
+@import "modules/buttons";
+
+* {
+    border-radius: 1px !important;
 }
+
+body {
+    padding-top: 70px;
+    transition: all 1s;
+    background-color: #34495e;
+}
+
+/*
+details {
+
+    summary:focus {
+        outline: none;
+    }
+
+    summary:hover {
+        cursor: pointer;
+    }
+
+    summary {
+
+    }
+
+    summary::-webkit-details-marker {
+        display: none;
+    }
+}
+
+details[open] {
+    summary {
+        margin-top: 10px;
+    }
+}
+*/
+
+hr {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+details {
+    background: #EEE;
+
+    summary {
+        font-size: 17px;
+        vertical-align: top;
+        background: #333;
+        color: #FFF;
+        border-radius: 3px;
+        padding: 5px 10px;
+        outline: none;
+    }
+
+    summary::-webkit-details-marker {
+        display: none;
+    }
+
+    /* Add the custom marker in the default state. */
+    summary:before {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-right: 8px;
+        content: "";
+        background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4621/treehouse-icon-sprite.png);
+        background-repeat: no-repeat;
+        background-position: 0 0;
+    }
+}
+
+details[open] {
+
+    summary {
+        background: #69c773;
+        color: #333;
+    }
+
+/* Move the sprite image when the details box is open. */
+    summary:before {
+        background-position: -18px 0;
+    }
+}
+

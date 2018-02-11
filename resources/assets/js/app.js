@@ -20,3 +20,16 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
     el: '#app'
 });
+
+(function($){
+
+    $(function(){
+        $('.form-comments').on('keypress', function(e){
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                $(this).submit();
+            }
+        });
+    });
+
+})(jQuery, window);

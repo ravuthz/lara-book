@@ -11,9 +11,19 @@
 |
 */
 
+Route::get('/', 'UserController@index');
+
 Route::get('/logout', function() { 
     Auth::logout();    
     return redirect()->back();
 })->name('logout');
 
 Auth::routes();
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('users/search', 'UserController@index')->name('users.search');
+    Route::resource('users', 'UserController');
+    Route::resource('follows', 'FollowController');
+    Route::resource('statuses', 'StatusController');
+    Route::resource('comments', 'CommentController');
+});

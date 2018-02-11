@@ -79,6 +79,7 @@ class UsersTableSeeder extends Seeder
     public function generate($userName, $firstName, $lastName, $email = null) {
         $faker = Faker\Factory::create();
         return User::create([
+            'slug' => str_slug($userName),
             'username'  => $userName,
             'password'  => bcrypt('123123'),
             'first_name' => $firstName,

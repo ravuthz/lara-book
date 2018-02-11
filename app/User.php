@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'first_name', 'last_name', 'email', 'phone','password',
+        'slug', 'username', 'first_name', 'last_name', 'email', 'phone','password',
     ];
 
     /**
@@ -26,6 +27,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function setUsernameAttribute($value) {
+        $this->attributes['slug'] = str_slug($value);
+        $this->attributes['username'] = $value;
+    }
 
     public function statuses() {
         return $this->hasMany('App\\Status');
@@ -61,7 +67,41 @@ class User extends Authenticatable
         );
     }
 
+    // helpers
+    
+    public function isUser($other) {
+        return $this->id === $other->id ? TRUE : FALSE;
+    }
 
+    public function isAuth() {
+        return $this->id === Auth::user()->id ? TRUE : FALSE;
+    }
+    
+    public function fullName() {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+    
+    public function accountAge() {
+        return $this->created_at ? $this->created_at->diffForHumans() : '';
+    }
+
+    public function gravatarLink($size = 30) {
+        $email = md5($this->email);
+        return "https://s.gravatar.com/avatar/{$email}?s={$size}";
+    }
+
+    public function getWithStatuses() {
+        $userIds = $this->followeds()->pluck('followed_id');
+        $userIds[] = $this->id;
+        return Status::whereIn('user_id', $userIds)->latest()->get();
+    }
+
+    public function isFollowedBy(User $follower) {
+        return Follow::where([
+            'follower_id' => $follower->id,
+            'followed_id' => $this->id
+        ])->exists();
+    }
 
 
 }

@@ -1,0 +1,34 @@
+// Publish Status area
+.status-post {
+    border: 1px solid #e3e3e3;
+    background-color: #fff;
+    margin-bottom: 1em;
+    padding: 0;
+
+    textarea {
+        border: none;
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}
+
+.status-post-submit {
+    border-top: 1px solid #e3e3e3;
+    padding: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+
+    .btn {
+        float: right;
+    }
+}
+
+// Individual Status
+.status-media {
+    border: 1px solid #e3e3e3;
+    background-color: #fff;
+    padding: 1em;
+    margin-bottom: 1em;
+}
